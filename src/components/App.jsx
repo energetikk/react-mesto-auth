@@ -10,6 +10,9 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import { Routes, Route } from 'react-router-dom';
+import Login from "./Login";
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -21,6 +24,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = React.useState([]);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = React.useState(false);
+
+
+  const [loggedIn, setLoggedIn] = useState(false)
+
 
   React.useEffect(() => {
     api
@@ -134,8 +141,17 @@ function App() {
 
   return (
     <div>
-      <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser}>
         <Header />
+      <Routes>
+        {/* <Route index element={<h2>Index</h2>} /> */}
+        {/* <Route path="/sign-up" element={<h1>signIN</h1>} />
+        <Route path="/sign-in" element={<h1>signUP</h1>} /> */}
+        {/* <Route path="*" element={<Footer />} /> */}
+        <Route path="/sign-up" element={<Login title={'Регистрация'} name={'register'} textButton={'Зарегестрироваться'}/>} />
+        <Route path="/sign-in" element={<Login title={'Вход'} textButton={'Войти'}/>} />
+        </Routes>
+
         <Main
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -145,7 +161,11 @@ function App() {
           onConfirmDelete={handleConfirmPopupOpen}
           cards={cards}
         />
-        <Footer />
+
+        {/* <Footer /> */}
+        {loggedIn && <Footer />}
+
+
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}

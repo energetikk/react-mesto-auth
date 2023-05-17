@@ -1,0 +1,55 @@
+.auth__container {
+    /* margin: 0 auto; */
+    /* border: 2px red solid; */
+    color: white;
+    
+
+}
+
+
+.auth__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* visibility: visible; */
+    /* opacity: 1; */
+    /* transition: visibility 0s, opacity .25s linear; */
+  }
+
+  .auth__submit {
+    margin-top: 216px;
+    width: 358px;
+    height: 50px;
+    background-color: white;
+    border-radius: 2px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .form__title-auth {
+    color: white;
+    font-family: Inter;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+
+  .form__auth {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form__item-auth {
+    width: 100%;
+  }
+  
+  .button__sign-in {
+    color: white;
+  }
+  

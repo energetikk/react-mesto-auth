@@ -45,3 +45,7 @@
 @import url(./blocks/form/__title/form__title.css);
 @import url(./blocks/form/__submit/_disabled/form__submit_disabled.css);
 @import url(./blocks/form/__submit-confirm/form__submit-confirm.css);
+
+
+
+@import url(./blocks/auth/auth__container.css);

@@ -17,6 +17,16 @@
     /* transition: visibility 0s, opacity .25s linear; */
   }
 
+    .auth_button {
+      font-family: Inter;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+}
+
   .auth__submit {
     margin-top: 216px;
     width: 358px;
@@ -75,6 +85,12 @@
     line-height: 17px;
     margin-top: 15px;
     text-decoration: none;
+  }
+
+  .auth {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   

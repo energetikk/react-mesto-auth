@@ -142,7 +142,7 @@ function App() {
   return (
     <div>
     <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header login={'Вход'} register={'Регистрация'}/>
       <Routes>
         {/* <Route index element={<h2>Index</h2>} /> */}
         {/* <Route path="/sign-up" element={<h1>signIN</h1>} />

@@ -149,7 +149,7 @@ function App() {
         <Route path="/sign-in" element={<h1>signUP</h1>} /> */}
         {/* <Route path="*" element={<Footer />} /> */}
         <Route path="/sign-up" element={<Login title={'Регистрация'} name={'register'} textButton={'Зарегестрироваться'}/>} />
-        <Route path="/sign-in" element={<Login title={'Вход'} textButton={'Войти'}/>} />
+        <Route path="/sign-in" element={<Login title={'Вход'} name={'login'} textButton={'Войти'}/>} />
         </Routes>
 
         <Main

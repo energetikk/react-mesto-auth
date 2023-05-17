@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     /* visibility: visible; */
     /* opacity: 1; */
     /* transition: visibility 0s, opacity .25s linear; */
@@ -29,6 +30,7 @@
   }
 
   .form__title-auth {
+    margin-bottom: 50px;
     color: white;
     font-family: Inter;
     font-weight: 900;
@@ -47,9 +49,33 @@
 
   .form__item-auth {
     width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px #CCCCCC solid;
+    color: #CCCCCC;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0 0 13px;
+  }
+
+  .form__item-auth:focus {
+    padding: 10px;
+    /* border: none; */
+    /* outline: 2px solid #ffffff; */
+    /* outline-offset: 3px; */
   }
   
   .button__sign-in {
     color: white;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 15px;
+    text-decoration: none;
   }
+
+  
   

@@ -1,11 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Login({name, title, textButton, onSubmit}) {
+
+
+
+function Login({name, title, textButton, onHandleSubmit}) {
+
+  const [formValue, setFormValue] = useState({
+    password: "",
+    email: "",
+  })
+  
+  const handleChangeInput = (evt) => {
+    const {name, value} = evt.target;
+    setFormValue({
+      ...formValue,
+      [name]: value
+    })
+  }
+  
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onHandleSubmit(formValue, setFormValue);
+  }
+
+
     return (
         <div className="auth__container">
           
-          <form name={`${name}-form`} className="form__auth" onSubmit={onSubmit} noValidate>
+          <form name={`${name}-form`} className="form__auth" onSubmit={handleSubmit} noValidate>
             <h2 className="form__title-auth">{title}</h2>
             
             <input
@@ -17,8 +40,8 @@ function Login({name, title, textButton, onSubmit}) {
             placeholder="E-mail"
             name="useremail"
             className="form__item-auth form__item_el_email"
-            // onChange={handleChangeName}
-            // value={name || ""}
+            onChange={handleChangeInput}
+            value= {formValue.email || ""}
           />
           <span id="input-email-error" className="popup__error"></span>
           <input
@@ -30,8 +53,9 @@ function Login({name, title, textButton, onSubmit}) {
             placeholder="Пароль"
             name="password"
             className="form__item-auth form__item_el_password"
-            // onChange={handleChangeDescription}
-            // value={description || ""}
+            onChange={handleChangeInput}
+            // value={password || ""}
+            value={formValue.password || ""}
           />
           <span id="input-password-error" className="popup__error"></span>
             <button type="submit" className="auth__submit">{textButton}</button>

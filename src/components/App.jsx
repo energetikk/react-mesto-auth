@@ -10,9 +10,9 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./Login";
-
+import ProtectedRoute from './ProtectedRoute'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -26,7 +26,7 @@ function App() {
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = React.useState(false);
 
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false);
 
 
   React.useEffect(() => {
@@ -142,27 +142,31 @@ function App() {
   return (
     <div>
     <CurrentUserContext.Provider value={currentUser}>
-        <Header login={'Вход'} register={'Регистрация'}/>
+      
+      <Header login={'Вход'} register={'Регистрация'}/>
+      
       <Routes>
-        {/* <Route index element={<h2>Index</h2>} /> */}
-        {/* <Route path="/sign-up" element={<h1>signIN</h1>} />
-        <Route path="/sign-in" element={<h1>signUP</h1>} /> */}
-        {/* <Route path="*" element={<Footer />} /> */}
-        <Route path="/sign-up" element={<Login title={'Регистрация'} name={'register'} textButton={'Зарегестрироваться'}/>} />
-        <Route path="/sign-in" element={<Login title={'Вход'} name={'login'} textButton={'Войти'}/>} />
+        
+        <Route path="/sign-up" element={<Login name={'register'} title={'Регистрация'}  textButton={'Зарегестрироваться'}/>} />
+        <Route path="/sign-in" element={<Login name={'login'} title={'Вход'}  textButton={'Войти'}/>} />
+        
+        
+        
+        <Route  path="/" element={<ProtectedRoute element={Main} loggedIn={loggedIn} 
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
+        onCardLike={handleCardLike}
+        onConfirmDelete={handleConfirmPopupOpen}
+        cards={cards}/>} />
+        
+        <Route path="/" element={loggedIn ? <Navigate to ="/" /> : <Navigate to="/sign-in" replace/>}/>
         </Routes>
 
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onConfirmDelete={handleConfirmPopupOpen}
-          cards={cards}
-        />
+        
 
-        {/* <Footer /> */}
+        
         {loggedIn && <Footer />}
 
 

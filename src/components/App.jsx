@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
@@ -12,7 +12,11 @@ import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./Login";
+import Register from "./Register";
 import ProtectedRoute from './ProtectedRoute'
+import PageNotFound from "./PageNotFound";
+import * as Auth from './Auth';
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -28,6 +32,12 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const handleLogin = (email) => {
+    setLoggedIn(true);
+    setEmailUser(email);
+  }
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     api
@@ -139,19 +149,44 @@ function App() {
     });
   }
 
+
+  const [emailUser, setEmailUser] = useState('');
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      Auth.getContent(jwt)
+      .then(
+        (user) => {
+          handleLogin(user);
+          navigate('/', {replace: true})
+          console.log(user.data.email)
+          setEmailUser(user.data.email);
+        }
+      )
+      .catch(err => console.log(err))
+    }
+  }
+
+useEffect(() => {
+  tokenCheck();
+}, [])
+
+
+function singOut() {
+  localStorage.removeItem('jwt');
+  setLoggedIn(false);
+}
+
+
   return (
     <div>
     <CurrentUserContext.Provider value={currentUser}>
-      
-      <Header login={'Вход'} register={'Регистрация'}/>
+      <Header loggedIn={loggedIn} emailUser={emailUser} singOut={singOut}/>
       
       <Routes>
-        
-        <Route path="/sign-up" element={<Login name={'register'} title={'Регистрация'}  textButton={'Зарегестрироваться'}/>} />
-        <Route path="/sign-in" element={<Login name={'login'} title={'Вход'}  textButton={'Войти'}/>} />
-        
-        
-        
+        <Route path="/sign-up" element={<Register />} />
+        <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>} />
         <Route  path="/" element={<ProtectedRoute element={Main} loggedIn={loggedIn} 
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
@@ -162,9 +197,9 @@ function App() {
         cards={cards}/>} />
         
         <Route path="/" element={loggedIn ? <Navigate to ="/" /> : <Navigate to="/sign-in" replace/>}/>
-        </Routes>
+        <Route path="*" element={<PageNotFound />}/>
+      </Routes>
 
-        
 
         
         {loggedIn && <Footer />}

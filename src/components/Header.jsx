@@ -3,7 +3,7 @@ import logo from "../images/logo.svg";
 import {useLocation} from "react-router-dom"
 import { Link } from "react-router-dom";
 
-function Header({register, login}) {
+function Header({loggedIn, emailUser, singOut}) {
 
   const location = useLocation();
 
@@ -11,15 +11,18 @@ function Header({register, login}) {
     <>
       <header className="auth">
       <img src={logo} alt="Логотип соцсети Mesto" className="header__logo" />
-      {location.pathname === "/sign-up" ? 
-        (<Link className="auth_button" to="/sign-in">{login}</Link>):
-        (<Link className="auth_button" to="/sign-up">{register}</Link>)   
-        }
-
-      {/* <nav className="auth">
-        <button className="auth_button">email@email.ru</button>
-        <button className="auth_button">Войти</button>
-      </nav> */}
+        {loggedIn ? (
+          <>
+            <p className="header__email">{emailUser}</p>
+            <Link onClick={singOut} to="/sign-in" >Выйти</Link> 
+          </> ) : (
+            <>
+              {location.pathname === "/sign-up" ? 
+                (<Link className="auth_button" to="/sign-in">Войти</Link>) :
+                (<Link className="auth_button" to="/sign-up">Регистрация</Link>)   
+                }
+            </>
+          )}
     </header>
     <div className="header__line"></div>
     </>
@@ -27,3 +30,19 @@ function Header({register, login}) {
 }
 
 export default Header;
+
+
+
+{/* <img src={logo} alt="Логотип соцсети Mesto" className="header__logo" />
+      
+      {location.pathname === "/sign-up" ? 
+        (<Link className="auth_button" to="/sign-in">Войти</Link>):
+        (<Link className="auth_button" to="/sign-up">Регистрация</Link>)   
+        } 
+
+        
+        {loggedIn &&
+          <>
+            <p className="header__email">{emailUser}</p>
+            <Link onClick={singOut} to="/sign-in" >Выйти</Link> 
+          </> } */}

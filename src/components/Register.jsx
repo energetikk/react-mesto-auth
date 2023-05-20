@@ -1,9 +1,9 @@
 import React from "react"
-import Login from "./Login";
+import AuthForm from "./AuthForm";
 
-const Register = (props) => {
+function Register() {
   return (
-    <Login />
+    <AuthForm name={'register'} title={'Регистрация'}  textButton={'Зарегестрироваться'}/>
   )
 };
 

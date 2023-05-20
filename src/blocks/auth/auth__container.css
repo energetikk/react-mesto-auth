@@ -93,5 +93,14 @@
     align-items: center;
   }
 
+  .Error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+  }
   
-  
+  .header__email {
+    color: white;
+  }

@@ -93,6 +93,12 @@
     align-items: center;
   }
 
+  .qwe {
+    display: flex;
+    align-items: center;
+  }
+
+
   .Error {
     display: flex;
     flex-direction: column;
@@ -103,4 +109,18 @@
   
   .header__email {
     color: white;
+    margin: 0 24px 0 0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .header__singout {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    text-decoration: none;
+    color: #A9A9A9;
   }

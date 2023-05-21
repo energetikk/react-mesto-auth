@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Auth from './Auth';
 
-
 function AuthForm({name, title, textButton, handleLogin }) {
-
   const navigate = useNavigate();  
   const [formValue, setFormValue] = useState({
     password: "",
@@ -44,15 +42,10 @@ function AuthForm({name, title, textButton, handleLogin }) {
         }
     }
 
-    
-
-
     return (
         <div className="auth__container">
-          
           <form name={`${name}-form`} className="form__auth" onSubmit={handleSubmit} noValidate>
             <h2 className="form__title-auth">{title}</h2>
-            
             <input
             id="input-email"
             required
@@ -66,6 +59,7 @@ function AuthForm({name, title, textButton, handleLogin }) {
             value= {formValue.email}
           />
           <span id="input-email-error" className="popup__error"></span>
+
           <input
             id="input-password"
             required

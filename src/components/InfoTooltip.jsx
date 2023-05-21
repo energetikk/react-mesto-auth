@@ -1,14 +1,14 @@
 import React from "react";
-import logoSuccess from "../images/success.png"
-// import logoNoSuccess from "../images/nosuccess.png"
+// import logoSuccess from "../images/success.png"
+// // import logoNoSuccess from "../images/nosuccess.png"
 
 function InfoTooltip({name, logo, textMessage, isOpen, onClose}) {
     return (
       <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : "" }`}>
-        <div className="popup__container">
+        <div className="popup__container popup_message">
           
             <img className="" src={logo}/>
-            <h3 className="info__title">{textMessage}</h3>
+            <h3 className="message__title">{textMessage}</h3>
             
           <button onClick={onClose} type="button" className="popup__button-close"></button>
         </div>

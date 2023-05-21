@@ -94,7 +94,7 @@ function App() {
     setIsStatusLoginError(false);
   }
 
-  function handleCheckStatusLogin() {
+  function handleCheckStatusLoginOk() {
     setIsStatusLoginOk(true);
   }
 
@@ -164,14 +164,8 @@ function App() {
     });
   }
 
-
   const [emailUser, setEmailUser] = useState('');
-  const [statusInfo, setStatusInfo] = useState(false);
-
-  function catchError() {
-    setStatusInfo(false);
-  }
-
+  
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
@@ -198,15 +192,14 @@ function singOut() {
   setLoggedIn(false);
 }
 
-
-  return (
+return (
     <div>
     <CurrentUserContext.Provider value={currentUser}>
       <Header loggedIn={loggedIn} emailUser={emailUser} singOut={singOut}/>
       
       <Routes>
-        <Route path="/sign-up" element={<Register />} />
-        <Route path="/sign-in" element={<Login handleLogin={handleLogin} handleCheckStatusLoginOk={handleCheckStatusLogin} handleCheckStatusLoginError={handleCheckStatusLoginError}/>} />
+        <Route path="/sign-up" element={<Register handleCheckStatusLoginOk={handleCheckStatusLoginOk} handleCheckStatusLoginError={handleCheckStatusLoginError}/>} />
+        <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
         <Route  path="/" element={<ProtectedRoute element={Main} loggedIn={loggedIn} 
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
@@ -250,8 +243,8 @@ function singOut() {
           onClose={closeAllPopups}
           onSubmitConfirmDelete={handleCardDelete}
         />
-        <InfoTooltip  logo={logoSuccess} textMessage={"Вы успешно вошли"} isOpen={isStatusLoginOk} onClose={closeAllPopups} />
-        <InfoTooltip logo={logoError} textMessage={"Что-то пошло не так"} isOpen={isStatusLoginError} onClose={closeAllPopups} />
+        <InfoTooltip name={'message'} logo={logoError} textMessage={"Что-то пошло не так! Попробуйте еще раз."} isOpen={isStatusLoginError} onClose={closeAllPopups} />
+        <InfoTooltip name={'message'}  logo={logoSuccess} textMessage={"Вы успешно зарегистрировались!"} isOpen={isStatusLoginOk} onClose={closeAllPopups} />
 
       </CurrentUserContext.Provider>
     </div>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Auth from './Auth';
 
-function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginOk, handleCheckStatusLoginError }) {
+function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginOk, handleCheckStatusLoginError}) {
   const navigate = useNavigate();  
   const [formValue, setFormValue] = useState({
     password: "",
@@ -23,10 +23,15 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
     if (name === 'register') {
         Auth.register({password, email})
         .then((res) => {
-            navigate('/sign-in', { replace: true });
-            
+            handleCheckStatusLoginOk();
+            navigate('/sign-in', { replace: true })
         })
-        .catch(err => console.log(err));
+        .catch((err) => {
+            // return err.then((res) => handleCheckStatusLoginError(res))
+            handleCheckStatusLoginError(err);
+            console.log(`ошибка ${err}`);
+            } 
+        )
         
     } else {
         Auth.authorize({password, email})
@@ -35,13 +40,13 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
                 localStorage.setItem('jwt', res.token);
                 handleLogin(formValue.email);
                 console.log(res);
-                handleCheckStatusLoginOk();
+                // handleCheckStatusLoginOk();
                 navigate('/', { replace: true });
             }
         })
         .catch((err) => {
-                    handleCheckStatusLoginError();
-                    console.log(`ошибкаааааа ${err}`)
+                    // handleCheckStatusLoginError();
+                    console.log(`ошибка ${err}`)
                 }
             )
         }

@@ -17,6 +17,10 @@ import ProtectedRoute from './ProtectedRoute'
 import PageNotFound from "./PageNotFound";
 import * as Auth from './Auth';
 import { useNavigate } from "react-router-dom";
+import InfoTooltip from './InfoTooltip'
+import logoSuccess from '../images/success.png'
+import logoError from '../images/nosuccess.png'
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -28,7 +32,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = React.useState([]);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = React.useState(false);
-
+  const [isStatusLoginOk, setIsStatusLoginOk] = useState(false);
+  const [isStatusLoginError, setIsStatusLoginError] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -85,6 +90,16 @@ function App() {
     setIsConfirmAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmDeletePopupOpen(false);
+    setIsStatusLoginOk(false);
+    setIsStatusLoginError(false);
+  }
+
+  function handleCheckStatusLogin() {
+    setIsStatusLoginOk(true);
+  }
+
+  function handleCheckStatusLoginError() {
+    setIsStatusLoginError(true);
   }
 
   function handleCardClick(card) {
@@ -151,6 +166,11 @@ function App() {
 
 
   const [emailUser, setEmailUser] = useState('');
+  const [statusInfo, setStatusInfo] = useState(false);
+
+  function catchError() {
+    setStatusInfo(false);
+  }
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt')
@@ -186,7 +206,7 @@ function singOut() {
       
       <Routes>
         <Route path="/sign-up" element={<Register />} />
-        <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>} />
+        <Route path="/sign-in" element={<Login handleLogin={handleLogin} handleCheckStatusLoginOk={handleCheckStatusLogin} handleCheckStatusLoginError={handleCheckStatusLoginError}/>} />
         <Route  path="/" element={<ProtectedRoute element={Main} loggedIn={loggedIn} 
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
@@ -230,6 +250,9 @@ function singOut() {
           onClose={closeAllPopups}
           onSubmitConfirmDelete={handleCardDelete}
         />
+        <InfoTooltip  logo={logoSuccess} textMessage={"Вы успешно вошли"} isOpen={isStatusLoginOk} onClose={closeAllPopups} />
+        <InfoTooltip logo={logoError} textMessage={"Что-то пошло не так"} isOpen={isStatusLoginError} onClose={closeAllPopups} />
+
       </CurrentUserContext.Provider>
     </div>
   );

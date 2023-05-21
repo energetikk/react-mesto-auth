@@ -1,9 +1,10 @@
 import React from "react"
 import AuthForm from "./AuthForm";
 
-function Login({handleLogin}) {
+function Login({handleLogin, handleCheckStatusLoginOk, handleCheckStatusLoginError}) {
   return (
-    <AuthForm name={'login'} title={'Вход'}  textButton={'Войти'} handleLogin={handleLogin}/>
+    <AuthForm name={'login'} title={'Вход'}  textButton={'Войти'} handleLogin={handleLogin} handleCheckStatusLoginOk={handleCheckStatusLoginOk}
+      handleCheckStatusLoginError={handleCheckStatusLoginError} />
   )
 };
 

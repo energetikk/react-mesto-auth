@@ -124,3 +124,7 @@
     text-decoration: none;
     color: #A9A9A9;
   }
+
+  .info__title {
+    color: black;
+  }

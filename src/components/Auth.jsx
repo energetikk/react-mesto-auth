@@ -34,9 +34,10 @@ export const authorize = ({password, email}) => {
     .then((res) => {
       if (res.status === 200) {
           return res.json()
-      } else {
-          Promise.reject(`Ошибка ${res.status}`)
-      }
+      } 
+      // else {
+      //     Promise.reject(`Ошибка ${res.status}`)
+      // }
     })
     
   };

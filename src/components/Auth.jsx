@@ -1,7 +1,14 @@
 // import React from "react"
 
-
 export const BASE_URL = 'https://auth.nomoreparties.co';
+
+//Проверка ответа от сервера
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Произошла ошибка: ${res.status}`); // если ошибка, отклоняем промис
+}
 
 export const register = ({password, email}) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -11,18 +18,8 @@ export const register = ({password, email}) => {
       },
       body: JSON.stringify({password, email})
   })
-  .then((res) => {
-    if (res.status === 200) {
-        return res.json();
-    } 
-    // else {
-    //     Promise.reject(`Ошибка ${res.status}`)
-    // }
-  })
-  .then((res) => {
-    return res;
-  })
-};
+  .then(res => checkResponse(res));
+}
 
 export const authorize = ({password, email}) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -32,14 +29,7 @@ export const authorize = ({password, email}) => {
         },
         body: JSON.stringify({password, email })
     })
-    .then((res) => {
-      if (res.status === 200) {
-          return res.json()
-      } 
-      // else {
-      //     Promise.reject(`Ошибка ${res.status}`)
-      // }
-    })
+    .then(res => checkResponse(res));
     
   };
 

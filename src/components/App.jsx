@@ -34,7 +34,6 @@ function App() {
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = React.useState(false);
   const [isStatusLoginOk, setIsStatusLoginOk] = useState(false);
   const [isStatusLoginError, setIsStatusLoginError] = useState(false);
-
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = (email) => {
@@ -83,16 +82,7 @@ function App() {
     setIsConfirmDeletePopupOpen(true);
   }
 
-  function closeAllPopups() {
-    setIsEditAvatarPopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsConfirmAvatarPopupOpen(false);
-    setIsImagePopupOpen(false);
-    setIsConfirmDeletePopupOpen(false);
-    setIsStatusLoginOk(false);
-    setIsStatusLoginError(false);
-  }
+  
 
   function handleCheckStatusLoginOk() {
     setIsStatusLoginOk(true);
@@ -105,6 +95,17 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsConfirmAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+    setIsConfirmDeletePopupOpen(false);
+    setIsStatusLoginOk(false);
+    setIsStatusLoginError(false);
   }
 
   function handleCardLike(card) {
@@ -174,7 +175,6 @@ function App() {
         (user) => {
           handleLogin(user);
           navigate('/', {replace: true})
-          console.log(user.data.email)
           setEmailUser(user.data.email);
         }
       )
@@ -185,7 +185,6 @@ function App() {
 useEffect(() => {
   tokenCheck();
 }, [])
-
 
 function singOut() {
   localStorage.removeItem('jwt');

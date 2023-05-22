@@ -9,7 +9,6 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
     password: "",
     email: "",
   });
-  console.log(formValue)
   
   const handleChangeInput = (evt) => {
     const {name, value} = evt.target;
@@ -18,6 +17,8 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
   
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    
     const { password, email } = formValue;
 
     if (name === 'register') {

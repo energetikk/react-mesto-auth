@@ -1,9 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import * as Auth from './Auth';
 
-function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginOk, handleCheckStatusLoginError}) {
+function AuthForm({name, title, textButton, handleCheckRegister, handleCheckLogin}) {
   const navigate = useNavigate();  
   const [formValue, setFormValue] = useState({
     password: "",
@@ -17,42 +16,13 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
   
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    
     const { password, email } = formValue;
-
     if (name === 'register') {
-        Auth.register({password, email})
-        .then((res) => {
-            handleCheckStatusLoginOk();
-            navigate('/sign-in', { replace: true })
-        })
-        .catch((err) => {
-            // return err.then((res) => handleCheckStatusLoginError(res))
-            handleCheckStatusLoginError(err);
-            console.log(`ошибка ${err}`);
-            } 
-        )
-        
+      handleCheckRegister(password, email);  
     } else {
-        Auth.authorize({password, email})
-        .then((res) => {
-            if (res.token) {
-                localStorage.setItem('jwt', res.token);
-                handleLogin(formValue.email);
-                console.log(res);
-                // handleCheckStatusLoginOk();
-                navigate('/', { replace: true });
-            }
-        })
-        .catch((err) => {
-                    // handleCheckStatusLoginError();
-                    console.log(`ошибка ${err}`)
-                }
-            )
-        }
-    }
-
+      handleCheckLogin(password, email);
+    }}
+  
     return (
         <div className="auth__container">
           <form name={`${name}-form`} className="form__auth" onSubmit={handleSubmit} noValidate>
@@ -67,7 +37,7 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
             name="email"
             className="form__item-auth form__item_el_email"
             onChange={handleChangeInput}
-            value= {formValue.email}
+            value= {formValue.email || ""}
           />
           <span id="input-email-error" className="popup__error"></span>
 
@@ -81,7 +51,6 @@ function AuthForm({name, title, textButton, handleLogin, handleCheckStatusLoginO
             name="password"
             className="form__item-auth form__item_el_password"
             onChange={handleChangeInput} 
-            // value={password || ""}
             value={formValue.password || ""}
           />
           <span id="input-password-error" className="popup__error"></span>

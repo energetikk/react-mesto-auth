@@ -3,10 +3,7 @@ class Api {
     // eslint-disable-next-line no-unused-expressions
     this._baseUrl = config.baseUrl,
     this._headers = config.headers
-    // this._baseUrl = ""
   }
-
-  // https://mesto.nomoreparties.co/v1/cohort-62/
 
 //Получить начальные карточки с сервера
   getInitialCards() {
@@ -95,8 +92,6 @@ _checkResponse(res) {
   return Promise.reject(`Произошла ошибка: ${res.status}`); // если ошибка, отклоняем промис
 }
 
-
-
 changeLikeCardStatus(cardId, isLiked) {
   if (isLiked) {
     return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
@@ -112,8 +107,6 @@ changeLikeCardStatus(cardId, isLiked) {
   .then(this._checkResponse)
   }
 }
-
-
 }
 
 const api = new Api({baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62/',
@@ -122,6 +115,5 @@ headers: {
  "Content-Type": "application/json"
  }
 })
-
 
 export default api;

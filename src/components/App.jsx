@@ -191,14 +191,50 @@ function singOut() {
   setLoggedIn(false);
 }
 
+function handleCheckRegister(password, email) {
+  Auth.register({password, email})
+        .then((res) => {
+            handleCheckStatusLoginOk();
+            navigate('/sign-in', { replace: true })
+        })
+        .catch((err) => {
+            // return err.then((res) => handleCheckStatusLoginError(res))
+            handleCheckStatusLoginError(err);
+            console.log(`ошибка ${err}`);
+            } 
+        )
+}
+
+
+function handleCheckLogin(password, email) {
+  Auth.authorize({password, email})
+        .then((res) => {
+            if (res.token) {
+                localStorage.setItem('jwt', res.token);
+                // handleLogin(email);
+                setLoggedIn(true);
+                setEmailUser(email);
+                // handleCheckStatusLoginOk();
+                navigate('/', { replace: true });
+            }
+        })
+        .catch((err) => {
+                    handleCheckStatusLoginError();
+                    console.log(`ошибка ${err}`)
+                }
+            )
+        }
+
+
+
 return (
     <div>
     <CurrentUserContext.Provider value={currentUser}>
       <Header loggedIn={loggedIn} emailUser={emailUser} singOut={singOut}/>
       
       <Routes>
-        <Route path="/sign-up" element={<Register handleCheckStatusLoginOk={handleCheckStatusLoginOk} handleCheckStatusLoginError={handleCheckStatusLoginError}/>} />
-        <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
+        <Route path="/sign-up" element={<Register handleCheckRegister={handleCheckRegister}/>} />
+        <Route path="/sign-in" element={<Login handleCheckLogin={handleCheckLogin}/>} />
         <Route  path="/" element={<ProtectedRoute element={Main} loggedIn={loggedIn} 
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}

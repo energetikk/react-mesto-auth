@@ -35,12 +35,7 @@ function App() {
   const [isStatusLoginOk, setIsStatusLoginOk] = useState(false);
   const [isStatusLoginError, setIsStatusLoginError] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = (email) => {
-    setLoggedIn(true);
-    setEmailUser(email);
-  }
-
+ 
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -81,8 +76,6 @@ function App() {
     setSelectedCard(card);
     setIsConfirmDeletePopupOpen(true);
   }
-
-  
 
   function handleCheckStatusLoginOk() {
     setIsStatusLoginOk(true);
@@ -182,9 +175,14 @@ function App() {
     }
   }
 
-useEffect(() => {
-  tokenCheck();
-}, [])
+  const handleLogin = (email) => {
+    setLoggedIn(true);
+    setEmailUser(email);
+  }
+
+  useEffect(() => {
+    tokenCheck();
+  }, [])
 
 function singOut() {
   localStorage.removeItem('jwt');
@@ -194,11 +192,11 @@ function singOut() {
 function handleCheckRegister(password, email) {
   Auth.register({password, email})
         .then((res) => {
-            handleCheckStatusLoginOk();
+            // handleCheckStatusLoginOk();
+            setIsStatusLoginOk(true);
             navigate('/sign-in', { replace: true })
         })
         .catch((err) => {
-            // return err.then((res) => handleCheckStatusLoginError(res))
             handleCheckStatusLoginError(err);
             console.log(`ошибка ${err}`);
             } 
@@ -211,10 +209,7 @@ function handleCheckLogin(password, email) {
         .then((res) => {
             if (res.token) {
                 localStorage.setItem('jwt', res.token);
-                // handleLogin(email);
-                setLoggedIn(true);
-                setEmailUser(email);
-                // handleCheckStatusLoginOk();
+                handleLogin(email);
                 navigate('/', { replace: true });
             }
         })
@@ -224,8 +219,6 @@ function handleCheckLogin(password, email) {
                 }
             )
         }
-
-
 
 return (
     <div>
@@ -243,15 +236,11 @@ return (
         onCardLike={handleCardLike}
         onConfirmDelete={handleConfirmPopupOpen}
         cards={cards}/>} />
-        
         <Route path="/" element={loggedIn ? <Navigate to ="/" /> : <Navigate to="/sign-in" replace/>}/>
         <Route path="*" element={<PageNotFound />}/>
       </Routes>
-
-
         
         {loggedIn && <Footer />}
-
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}

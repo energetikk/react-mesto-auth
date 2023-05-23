@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+// import {useForm} from "../hooks/useForm"
 
 function AuthForm({name, title, textButton, handleCheckRegister, handleCheckLogin}) {
-  const navigate = useNavigate();  
+  // const navigate = useNavigate();  
   const [formValue, setFormValue] = useState({
     password: "",
     email: "",

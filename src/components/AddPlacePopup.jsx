@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
-// import {useForm} from './hooks/useForm'
+import useForm from "./hooks/useForm";
 
 function AddPlacePopup({ isOpen, onClose, onUpdateCards }) {
-  const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+  // const [name, setName] = useState("");
+  // const [link, setLink] = useState("");
+  const {values, handleChange, setValues} = useForm({});
 
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
+  // function handleChangeName(evt) {
+  //   setName(evt.target.value);
+  // }
 
-  function handleChangeLink(evt) {
-    setLink(evt.target.value);
-  }
+  // function handleChangeLink(evt) {
+  //   setLink(evt.target.value);
+  // }
 
   React.useEffect(() => {
-    setName("");
-    setLink("");
+    setValues({});
   }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateCards({
-      name: name,
-      link: link,
+      name: values.name,
+      link: values.link,
     });
   }
 
@@ -47,9 +47,9 @@ function AddPlacePopup({ isOpen, onClose, onUpdateCards }) {
             name="name"
             placeholder="Название"
             className="form__item form__item_place_name"
-            // ref={cardNameRef}
-            onChange={handleChangeName}
-            value={name || ""}
+            // onChange={handleChangeName}
+            onChange={handleChange}
+            value={values.name || ""}
           />
           <span id="input-newplace-error" className="popup__error"></span>
           <input
@@ -59,9 +59,9 @@ function AddPlacePopup({ isOpen, onClose, onUpdateCards }) {
             name="link"
             placeholder="Ссылка на картинку"
             className="form__item form__item_place_link"
-            // ref={cardLinkRef}
-            onChange={handleChangeLink}
-            value={link || ""}
+            // onChange={handleChangeLink}
+            onChange={handleChange}
+            value={values.link || ""}
           />
           <span id="input-link-error" className="popup__error"></span>
         </fieldset>

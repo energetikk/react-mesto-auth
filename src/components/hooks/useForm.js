@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useForm(inputValues) {
+function useForm(inputValues) {
     const [values, setValues] = useState(inputValues);
   
     const handleChange = (event) => {
@@ -9,4 +9,6 @@ export function useForm(inputValues) {
     };
     return {values, handleChange, setValues};
   }
+
+  export default useForm;
    
